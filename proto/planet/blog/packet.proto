@@ -9,6 +9,7 @@ message BlogPacketData {
     oneof packet {
         NoData noData = 1;
         // this line is used by starport scaffolding # ibc/packet/proto/field
+				IbcUpdatePostPacketData ibcUpdatePostPacket = 3; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				IbcPostPacketData ibcPostPacket = 2; // this line is used by starport scaffolding # ibc/packet/proto/field/number
     }
 }
@@ -26,5 +27,16 @@ message IbcPostPacketData {
 // IbcPostPacketAck defines a struct for the packet acknowledgment
 message IbcPostPacketAck {
 	  string postID = 1;
+}
+// IbcUpdatePostPacketData defines a struct for the packet payload
+message IbcUpdatePostPacketData {
+  string postID = 1;
+  string title = 2;
+  string content = 3;
+}
+
+// IbcUpdatePostPacketAck defines a struct for the packet acknowledgment
+message IbcUpdatePostPacketAck {
+	  string updated = 1;
 }
 // this line is used by starport scaffolding # ibc/packet/proto/message

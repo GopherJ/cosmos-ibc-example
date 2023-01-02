@@ -74808,6 +74808,8 @@ definitions:
       the connection handshake.
   planet.blog.MsgSendIbcPostResponse:
     type: object
+  planet.blog.MsgSendIbcUpdatePostResponse:
+    type: object
   planet.blog.Params:
     type: object
     description: Params defines the parameters for the module.

@@ -2,6 +2,8 @@ import { BlogPacketData } from "./types/planet/blog/packet"
 import { NoData } from "./types/planet/blog/packet"
 import { IbcPostPacketData } from "./types/planet/blog/packet"
 import { IbcPostPacketAck } from "./types/planet/blog/packet"
+import { IbcUpdatePostPacketData } from "./types/planet/blog/packet"
+import { IbcUpdatePostPacketAck } from "./types/planet/blog/packet"
 import { Params } from "./types/planet/blog/params"
 import { Post } from "./types/planet/blog/post"
 import { SentPost } from "./types/planet/blog/sent_post"
@@ -13,6 +15,8 @@ export {
     NoData,
     IbcPostPacketData,
     IbcPostPacketAck,
+    IbcUpdatePostPacketData,
+    IbcUpdatePostPacketAck,
     Params,
     Post,
     SentPost,

@@ -11,6 +11,8 @@
 
 export type BlogMsgSendIbcPostResponse = object;
 
+export type BlogMsgSendIbcUpdatePostResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */

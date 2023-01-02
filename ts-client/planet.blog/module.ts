@@ -8,9 +8,10 @@ import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
 import { MsgSendIbcPost } from "./types/planet/blog/tx";
+import { MsgSendIbcUpdatePost } from "./types/planet/blog/tx";
 
 
-export { MsgSendIbcPost };
+export { MsgSendIbcPost, MsgSendIbcUpdatePost };
 
 type sendMsgSendIbcPostParams = {
   value: MsgSendIbcPost,
@@ -18,9 +19,19 @@ type sendMsgSendIbcPostParams = {
   memo?: string
 };
 
+type sendMsgSendIbcUpdatePostParams = {
+  value: MsgSendIbcUpdatePost,
+  fee?: StdFee,
+  memo?: string
+};
+
 
 type msgSendIbcPostParams = {
   value: MsgSendIbcPost,
+};
+
+type msgSendIbcUpdatePostParams = {
+  value: MsgSendIbcUpdatePost,
 };
 
 
@@ -55,12 +66,34 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		async sendMsgSendIbcUpdatePost({ value, fee, memo }: sendMsgSendIbcUpdatePostParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgSendIbcUpdatePost: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgSendIbcUpdatePost({ value: MsgSendIbcUpdatePost.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgSendIbcUpdatePost: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		
 		msgSendIbcPost({ value }: msgSendIbcPostParams): EncodeObject {
 			try {
 				return { typeUrl: "/planet.blog.MsgSendIbcPost", value: MsgSendIbcPost.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgSendIbcPost: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgSendIbcUpdatePost({ value }: msgSendIbcUpdatePostParams): EncodeObject {
+			try {
+				return { typeUrl: "/planet.blog.MsgSendIbcUpdatePost", value: MsgSendIbcUpdatePost.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgSendIbcUpdatePost: Could not create message: ' + e.message)
 			}
 		},
 		
